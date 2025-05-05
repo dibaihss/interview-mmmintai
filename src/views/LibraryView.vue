@@ -19,7 +19,7 @@ function handleFilesDrop(fileList: FileList) {
         thumbnail: objectUrl,
         w: img.width,
         h: img.height,
-        title: file.name
+        title: file.name,
       }
       galleryItems.value.push(newItem)
       console.log('Image loaded:', galleryItems.value)
@@ -27,28 +27,6 @@ function handleFilesDrop(fileList: FileList) {
     img.src = objectUrl
   }
 }
-
-const items = ref<GalleryItem[]>([
-  {
-    src: 'https://www.schadensmeldung.digital/images/fuhrparkmanagerin.webp',
-    thumbnail: 'https://www.schadensmeldung.digital/images/fuhrparkmanagerin.webp',
-    w: 0,
-    h: 0,
-    title: 'Will be used for caption',
-  },
-  {
-    src: 'https://www.schadensmeldung.digital/images/logistik.webp',
-    thumbnail: 'https://www.schadensmeldung.digital/images/logistik.webp',
-    w: 0,
-    h: 0,
-  },
-  {
-    src: 'https://www.schadensmeldung.digital/images/werkstatt.webp',
-    thumbnail: 'https://www.schadensmeldung.digital/images/werkstatt.webp',
-    w: 0,
-    h: 0,
-  },
-])
 </script>
 
 <template>
