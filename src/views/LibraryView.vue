@@ -7,11 +7,11 @@ import ImageGallery from '@/components/ImageGallery.vue'
 const galleryItems = ref<GalleryItem[]>([])
 const acceptedFileTypes = '.jpg, .jpeg, .png, .webp'
 
-function enumerate(fileList: FileList) {
+function handleFilesDrop(fileList: FileList) {
   for (let i = 0; i < fileList.length; i++) {
     const file = fileList[i]
     const objectUrl = URL.createObjectURL(file)
-    
+
     const img = new Image()
     img.onload = () => {
       const newItem: GalleryItem = {
@@ -22,7 +22,7 @@ function enumerate(fileList: FileList) {
         title: file.name
       }
       galleryItems.value.push(newItem)
-      console.log('Image loaded:',galleryItems.value)
+      console.log('Image loaded:', galleryItems.value)
     }
     img.src = objectUrl
   }
@@ -61,7 +61,7 @@ const items = ref<GalleryItem[]>([
       <v-card>
         <v-card-title>Drop Field</v-card-title>
         <v-card-text>
-          <drop-field @drop="enumerate"></drop-field>
+          <DropField :accept="acceptedFileTypes" @drop="handleFilesDrop" />
         </v-card-text>
       </v-card>
     </v-col>
@@ -70,7 +70,10 @@ const items = ref<GalleryItem[]>([
       <v-card>
         <v-card-title>Gallery</v-card-title>
         <v-card-text>
-          <image-gallery :items="items"></image-gallery>
+          <div v-if="galleryItems.length === 0" class="text-center pa-4">
+            <p>No images uploaded yet. Drop images in the field above.</p>
+          </div>
+          <ImageGallery v-else :items="galleryItems" />
         </v-card-text>
       </v-card>
     </v-col>
