@@ -4,8 +4,28 @@ import type { GalleryItem } from '@/lib/gallery-item.d.ts'
 import DropField from '@/components/DropField.vue'
 import ImageGallery from '@/components/ImageGallery.vue'
 
+const galleryItems = ref<GalleryItem[]>([])
+const acceptedFileTypes = '.jpg, .jpeg, .png, .webp'
+
 function enumerate(fileList: FileList) {
-  console.log(fileList)
+  for (let i = 0; i < fileList.length; i++) {
+    const file = fileList[i]
+    const objectUrl = URL.createObjectURL(file)
+    
+    const img = new Image()
+    img.onload = () => {
+      const newItem: GalleryItem = {
+        src: objectUrl,
+        thumbnail: objectUrl,
+        w: img.width,
+        h: img.height,
+        title: file.name
+      }
+      galleryItems.value.push(newItem)
+      console.log('Image loaded:',galleryItems.value)
+    }
+    img.src = objectUrl
+  }
 }
 
 const items = ref<GalleryItem[]>([
