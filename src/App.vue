@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 
 const drawer = ref(true)
 </script>
@@ -22,6 +22,7 @@ const drawer = ref(true)
         <v-list-item title="Challenge 1" link to="/"></v-list-item>
         <v-list-item title="Challenge 2" link to="/challenge2"></v-list-item>
         <v-list-item title="Library" link to="/library"></v-list-item>
+        <v-list-item title="Damage Process" link to="/damageProcess"></v-list-item>
       </v-list>
     </v-navigation-drawer>
 

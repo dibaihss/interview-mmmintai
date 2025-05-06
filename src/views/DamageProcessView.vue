@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { ProcessItem } from '@/lib/process-item.d.ts'
-
 import { ref } from 'vue'
-
-const items = ref<ProcessItem[]>([
+import type { ProcessItem } from '@/lib/process-item'
+import TimelineVisualizer from '@/components/TimelineVisualizer.vue'
+// Sample data for the process steps
+const processItems = ref<ProcessItem[]>([
   {
     type: 'CALL_RECEIVED',
     title: 'Schadenmeldung telefonisch eingegangen',
@@ -102,57 +102,22 @@ const items = ref<ProcessItem[]>([
     comment: 'Fahrzeug übergeben und dokumentiert.',
   },
 ])
-
-/**
- * TODO: Disable this when challenge completed
- */
-const isDebug = ref(false)
 </script>
 
 <template>
-  <v-row>
-    <v-col cols="12">
-      <h1>📋 Coding Interview Task: Visualize a Damage Process</h1>
-
-      <h2>🎯 Goal</h2>
-      <p>
-        Your task is to implement a <strong>clean, user-friendly UI</strong> to visualize the steps
-        of a damage claim process (Schadenprozess). The focus is on
-        <strong>visual presentation</strong> and <strong>structured display</strong> of data—not
-        backend logic.
-      </p>
-
-      <h2>🧩 Task Description</h2>
-      <p>
-        We provide you with a list of 10 process steps in a fixed order, each representing one stage
-        in the damage handling workflow (e.g., image upload, approval, repair, etc.). See
-        <code>process-item.d.ts</code>
-      </p>
-
-      <h2>🧪 Your Challenge</h2>
-      <p>
-        Build a <strong>responsive UI component</strong> that visualizes the process
-        <strong>as a timeline or step-based flow</strong>. Use your creativity and best practices in
-        frontend development.
-      </p>
-
-      <h2>✅ Requirements</h2>
-      <ul>
-        <li>Display all 10 steps in chronological order.</li>
-        <li>
-          Show <code>title</code>, <code>timestamp</code>, <code>status</code>, and optionally other
-          fields (you decide what's relevant).
-        </li>
-        <li>Highlight the current or active step (if desired).</li>
-        <li>Use a clear visual structure (timeline, cards, vertical stepper, etc.).</li>
-        <li>Code must be clean and readable.</li>
-      </ul>
-    </v-col>
-
-    <v-col v-if="isDebug">
-      <pre>
-        {{ items }}
-      </pre>
-    </v-col>
-  </v-row>
+  <v-container>
+    <v-row>
+      <v-col cols="12">
+        <h1>📋 Schadenprozess</h1>
+        <v-col cols="12">
+          <v-card>
+            <v-card-title>Timeline View</v-card-title>
+            <v-card-text>
+              <TimelineVisualizer :process-items="processItems" :activeStepIndex="6" />
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>

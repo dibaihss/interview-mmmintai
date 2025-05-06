@@ -4,31 +4,29 @@ import type { GalleryItem } from '@/lib/gallery-item.d.ts'
 import DropField from '@/components/DropField.vue'
 import ImageGallery from '@/components/ImageGallery.vue'
 
-function enumerate(fileList: FileList) {
-  console.log(fileList)
-}
+const galleryItems = ref<GalleryItem[]>([])
+const acceptedFileTypes = '.jpg, .jpeg, .png, .webp'
 
-const items = ref<GalleryItem[]>([
-  {
-    src: 'https://www.schadensmeldung.digital/images/fuhrparkmanagerin.webp',
-    thumbnail: 'https://www.schadensmeldung.digital/images/fuhrparkmanagerin.webp',
-    w: 0,
-    h: 0,
-    title: 'Will be used for caption',
-  },
-  {
-    src: 'https://www.schadensmeldung.digital/images/logistik.webp',
-    thumbnail: 'https://www.schadensmeldung.digital/images/logistik.webp',
-    w: 0,
-    h: 0,
-  },
-  {
-    src: 'https://www.schadensmeldung.digital/images/werkstatt.webp',
-    thumbnail: 'https://www.schadensmeldung.digital/images/werkstatt.webp',
-    w: 0,
-    h: 0,
-  },
-])
+function handleFilesDrop(fileList: FileList) {
+  for (let i = 0; i < fileList.length; i++) {
+    const file = fileList[i]
+    const objectUrl = URL.createObjectURL(file)
+
+    const img = new Image()
+    img.onload = () => {
+      const newItem: GalleryItem = {
+        src: objectUrl,
+        thumbnail: objectUrl,
+        w: img.width,
+        h: img.height,
+        title: file.name,
+      }
+      galleryItems.value.push(newItem)
+      console.log('Image loaded:', galleryItems.value)
+    }
+    img.src = objectUrl
+  }
+}
 </script>
 
 <template>
@@ -41,7 +39,7 @@ const items = ref<GalleryItem[]>([
       <v-card>
         <v-card-title>Drop Field</v-card-title>
         <v-card-text>
-          <drop-field @drop="enumerate"></drop-field>
+          <DropField :accept="acceptedFileTypes" @drop="handleFilesDrop" />
         </v-card-text>
       </v-card>
     </v-col>
@@ -50,7 +48,10 @@ const items = ref<GalleryItem[]>([
       <v-card>
         <v-card-title>Gallery</v-card-title>
         <v-card-text>
-          <image-gallery :items="items"></image-gallery>
+          <div v-if="galleryItems.length === 0" class="text-center pa-4">
+            <p>No images uploaded yet. Drop images in the field above.</p>
+          </div>
+          <ImageGallery v-else :items="galleryItems" />
         </v-card-text>
       </v-card>
     </v-col>
