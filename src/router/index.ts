@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ChallengeOne from '../views/ChallengeOne.vue'
 import ChallengeTwo from '../views/ChallengeTwo.vue'
 import LibraryView from '../views/LibraryView.vue'
+import DamageProcess from '@/views/DamageProcessView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,6 +21,11 @@ const router = createRouter({
       path: '/library',
       name: 'library',
       component: LibraryView,
+    },
+    {
+      path: '/damageProcess',
+      name: 'damageProcess',
+      component: DamageProcess,
     },
   ],
 })
