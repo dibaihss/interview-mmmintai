@@ -29,6 +29,17 @@ onMounted(() => {
   setActiveStep()
 })
 
+// Format timestamp to display date and time in German format
+const formatDate = (timestamp: string): string => {
+  return new Date(timestamp).toLocaleString('de-DE', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
 const setActiveStep = () => {
   const index = localActiveStepIndex.value
   emit('update:activeStepIndex', index)
@@ -54,6 +65,9 @@ const setActiveStep = () => {
             'completed-item': index < localActiveStepIndex,
           }"
         >
+          <template v-slot:opposite>
+            <div class="date">{{ formatDate(item.timestamp) }}</div>
+          </template>
           <v-card
             class="timeline-card"
             :class="{
@@ -142,5 +156,9 @@ const setActiveStep = () => {
 .active-card .step-number {
   background-color: white;
   color: var(--v-primary-base);
+}
+.date {
+  color: rgba(0, 0, 0, 0.87);
+  font-weight: 500;
 }
 </style>
