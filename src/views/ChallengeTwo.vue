@@ -106,7 +106,7 @@ const items = ref<ProcessItem[]>([
 /**
  * TODO: Disable this when challenge completed
  */
-const isDebug = ref(true)
+const isDebug = ref(false)
 </script>
 
 <template>
@@ -147,10 +147,6 @@ const isDebug = ref(true)
         <li>Use a clear visual structure (timeline, cards, vertical stepper, etc.).</li>
         <li>Code must be clean and readable.</li>
       </ul>
-    </v-col>
-
-    <v-col cols="12">
-      <h2>Prozess Visualisierung</h2>
     </v-col>
 
     <v-col v-if="isDebug">

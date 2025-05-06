@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { ProcessItem } from '@/lib/process-item'
-
+import TimelineVisualizer from '@/components/TimelineVisualizer.vue'
 // Sample data for the process steps
 const processItems = ref<ProcessItem[]>([
   {
@@ -102,8 +102,6 @@ const processItems = ref<ProcessItem[]>([
     comment: 'Fahrzeug übergeben und dokumentiert.',
   },
 ])
-
-// Active step index that can be updated by the timeline component
 </script>
 
 <template>
@@ -115,11 +113,7 @@ const processItems = ref<ProcessItem[]>([
           <v-card>
             <v-card-title>Timeline View</v-card-title>
             <v-card-text>
-              <!-- <TimeLineView
-          :process-items="processItems"
-          :active-step="0"
-        /> -->
-              <p>Timeline component is not implemented yet.</p>
+              <TimelineVisualizer :process-items="processItems" :activeStepIndex="6" />
             </v-card-text>
           </v-card>
         </v-col>

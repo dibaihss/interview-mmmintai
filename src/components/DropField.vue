@@ -25,6 +25,9 @@ function dragLeave() {
 
 function onFileInput(event: Event) {
   const input = event.target as HTMLInputElement
+  if (!input.files) {
+    return
+  }
   handleFileList(input.files)
 }
 
