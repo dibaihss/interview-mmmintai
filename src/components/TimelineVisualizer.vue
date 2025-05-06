@@ -40,6 +40,23 @@ const formatDate = (timestamp: string): string => {
   })
 }
 
+const getStepIcon = (type: string): string => {
+  const iconMap: Record<string, string> = {
+    CALL_RECEIVED: 'mdi-phone',
+    IMAGES_RECEIVED: 'mdi-image-multiple',
+    KVA_REQUESTED: 'mdi-file-document-outline',
+    KVA_RECEIVED: 'mdi-file-document',
+    LEASE_APPROVAL: 'mdi-check-circle-outline',
+    FLEET_APPROVAL: 'mdi-car-multiple',
+    INSURANCE_APPROVAL: 'mdi-shield-check',
+    WORKSHOP_APPOINTMENT: 'mdi-calendar-clock',
+    REPAIRED: 'mdi-wrench',
+    PROCESS_COMPLETED: 'mdi-check-all',
+  }
+
+  return iconMap[type] || 'mdi-checkbox-blank-circle-outline'
+}
+
 const setActiveStep = () => {
   const index = localActiveStepIndex.value
   emit('update:activeStepIndex', index)
@@ -59,6 +76,8 @@ const setActiveStep = () => {
         <v-timeline-item
           v-for="(item, index) in processItems"
           :key="item.type"
+          :icon="getStepIcon(item.type)"
+          :icon-color="getStepColor(index)"
           :size="index === localActiveStepIndex ? 'large' : 'small'"
           :class="{
             'active-item': index === localActiveStepIndex,
@@ -89,7 +108,7 @@ const setActiveStep = () => {
               </div>
             </v-card-title>
 
-            <v-card-subtitle class="pb-0">
+            <v-card-subtitle class="pb-0 card-subtitle">
               <v-icon icon="mdi-account" size="small" class="mr-1"></v-icon>
               {{ item.contact }}
               <span class="mx-1">•</span>
@@ -130,6 +149,10 @@ const setActiveStep = () => {
 
 .future-card {
   opacity: 0.85;
+}
+
+.card-subtitle {
+  margin-bottom: 5px;
 }
 
 .active-item :deep(.v-timeline-divider__dot) {
